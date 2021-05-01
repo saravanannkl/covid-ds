@@ -81,7 +81,7 @@ DATA_MAPPING = {
     "site_level_vaccination_count": {
         "location_type": "district",
         "type": "object_list",
-        "columns": ["session_site_id", "title", "session_site_name", "total", "partial_vaccinated", "totally_vaccinated", "today"],
+        "columns": ["session_site_id", "session_site_name", "total", "partial_vaccinated", "totally_vaccinated", "today"],
         "path": "getBeneficiariesGroupBy"
     }
 }
