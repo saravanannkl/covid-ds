@@ -5,6 +5,8 @@ import json
 import csv
 from sqlite_utils import Database
 
+DB_FILE_NAME = "covid-ds.db"
+
 # CSV File and table mapping
 TABLE_FILE_MAPPING = {
     "vaccination_site_count.csv": {
@@ -219,3 +221,52 @@ def load_location_data_files(db, folder, location_type, location_id, date):
 
         load_csv_file(db, table, os.path.join(folder, file),
                       location_col_values, extra_kwargs)
+
+def load_folder_data(db, folder, data_path_len):
+    path_split = folder.split(os.path.sep)
+    data_sub_folders = path_split[data_path_len:]
+    data_sub_folder_count = len(data_sub_folders)
+    location_type = ""
+    location_id = 0
+    if data_sub_folder_count == 1:
+        location_type = "national"
+    elif data_sub_folder_count == 2:
+        state_detail = data_sub_folders[-2]
+        location_id = state_detail.split("-")[0]
+        location_type = "state"
+    elif data_sub_folder_count == 3:
+        district_detail = data_sub_folders[-2]
+        location_id = district_detail.split("-")[0]
+        location_type = "district"
+    else:
+        raise Exception("Invalid Data folder: {}".format(folder))
+    date = data_sub_folders[-1]
+    load_location_data_files(db, folder, location_type, location_id, date)
+
+
+def load_cowin_data(root_folder):
+    """
+        Main method to load data into sqlite file
+
+        Parameter:
+            root_folder: Root folder of the project
+    """
+    db_file_path = os.path.join(root_folder, DB_FILE_NAME)
+    if os.path.exists(db_file_path):
+        os.remove(db_file_path)
+
+    db = Database(db_file_path)
+    load_state_district_meta_data(db)
+    
+    data_folder = os.path.join(root_folder, "data", "cowin")
+    data_path_len = len(data_folder.split(os.path.sep))
+    for (root, dirs, files) in os.walk(data_folder):
+        if "2021-" in root:
+            load_folder_data(db, root, data_path_len)
+    
+    db.conn.close()
+
+
+if __name__ == "__main__":
+    folder = os.path.dirname(os.path.abspath(__file__))
+    load_cowin_data(folder)
