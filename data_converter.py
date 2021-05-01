@@ -88,6 +88,19 @@ DATA_MAPPING = {
 
 
 def get_nested_object(obj, path_key):
+    """
+        Gets the value of deeply nested object
+        with nested keys separated by dot(.)
+        Used to extract nested data from COWIN
+        output JSON
+
+        Parameters:
+            obj: JSON Object
+            path_key: nested key separated by dot(.)
+        Returns:
+            Value of the nested key.
+            If the nested key is not present, then None is returned.
+    """
     if path_key == ".":
         return obj
     parts = path_key.split(".")
@@ -100,6 +113,15 @@ def get_nested_object(obj, path_key):
 
 
 def convert_object_to_csv(obj, date, columns, file_path):
+    """
+        Converts JSON object into a single row CSV file.
+
+        Parameters:
+            obj: JSON object for which the values needs to be extracted.
+            date: Date value that needs to be added at start
+            columns: List of fields that needs to be extracted.
+            file_path: Location where the CSV file needs to be saved.
+    """
     with open(file_path, 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile, quoting=csv.QUOTE_MINIMAL)
         csv_writer.writerow(["date", *columns])
@@ -108,6 +130,15 @@ def convert_object_to_csv(obj, date, columns, file_path):
 
 
 def convert_object_array_to_csv(obj_list, date, columns, file_path):
+    """
+        Converts JSON array of objects into a multi row CSV file.
+
+        Parameters:
+            obj_list: JSON array of objects for which the values needs to be extracted.
+            date: Date value that needs to be added at start
+            columns: List of fields that needs to be extracted.
+            file_path: Location where the CSV file needs to be saved.
+    """
     with open(file_path, 'w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile, quoting=csv.QUOTE_MINIMAL)
         csv_writer.writerow(["date", *columns])
@@ -117,6 +148,17 @@ def convert_object_array_to_csv(obj_list, date, columns, file_path):
 
 
 def convert_data(location_type, folder, data):
+    """
+        Converts JSON data fetched from COWIN Dashboard website
+        into multiple csv files based on data. Uses mapping
+        dictionary for extracting data from JSON to multiple
+        csv files.
+
+        Parameters:
+            location_type: Location Type for which the data is retreived.
+            folder: Output folder path for CSV files.
+            data: JSON data retreived from COWIN website
+    """
     for data_type, config in DATA_MAPPING.items():
         c_location_type = config.get("location_type")
         if c_location_type and c_location_type != location_type:
