@@ -10,17 +10,17 @@ DB_FILE_NAME = "covid-ds.db"
 # CSV File and table mapping
 TABLE_FILE_MAPPING = {
     "vaccination_site_count.csv": {
-        "table": "vaccination_site_count",
+        "table": "raw_vaccination_site_count",
         "load_location_columns": True,
         "pk": ("location_type", "location_id", "date")
     },
     "vaccination_session_count.csv": {
-        "table": "vaccination_session_count",
+        "table": "raw_vaccination_session_count",
         "load_location_columns": True,
         "pk": ("location_type", "location_id", "date")
     },
     "meta.csv": {
-        "table": "meta",
+        "table": "raw_meta",
         "load_location_columns": True,
         "pk": (
             "location_type",
@@ -29,7 +29,7 @@ TABLE_FILE_MAPPING = {
         )
     },
     "vaccination_session_count.csv": {
-        "table": "vaccination_session_count",
+        "table": "raw_vaccination_session_count",
         "load_location_columns": True,
         "pk": (
             "location_type",
@@ -38,7 +38,7 @@ TABLE_FILE_MAPPING = {
         )
     },
     "registration_count.csv": {
-        "table": "registration_count",
+        "table": "raw_registration_count",
         "load_location_columns": True,
         "pk": (
             "location_type",
@@ -47,7 +47,7 @@ TABLE_FILE_MAPPING = {
         )
     },
     "vaccination_by_age.csv": {
-        "table": "vaccination_by_age",
+        "table": "raw_vaccination_by_age",
         "load_location_columns": True,
         "pk": (
             "location_type",
@@ -56,7 +56,7 @@ TABLE_FILE_MAPPING = {
         )
     },
     "vaccination_count.csv": {
-        "table": "vaccination_count",
+        "table": "raw_vaccination_count",
         "load_location_columns": True,
         "pk": (
             "location_type",
@@ -65,7 +65,7 @@ TABLE_FILE_MAPPING = {
         )
     },
     "session_vaccination_count.csv": {
-        "table": "session_vaccination_count",
+        "table": "raw_session_vaccination_count",
         "load_location_columns": True,
         "pk": (
             "location_type",
@@ -75,7 +75,7 @@ TABLE_FILE_MAPPING = {
         )
     },
     "site_level_vaccination_count.csv": {
-        "table": "site_level_vaccination_count",
+        "table": "raw_site_level_vaccination_count",
         "load_location_columns": True,
         "pk": (
             "location_type",
@@ -85,7 +85,7 @@ TABLE_FILE_MAPPING = {
         )
     },
     "state_level_vaccination_count.csv": {
-        "table": "state_level_vaccination_count",
+        "table": "raw_state_level_vaccination_count",
         "load_location_columns": False,
         "pk": (
             "date",
@@ -93,7 +93,7 @@ TABLE_FILE_MAPPING = {
         )
     },
     "last_7days_vaccination_count.csv": {
-        "table": "daily_vaccination_count_snapshot",
+        "table": "raw_daily_vaccination_count_last_7days",
         "load_location_columns": True,
         "pk": (
             "location_type",
@@ -103,7 +103,7 @@ TABLE_FILE_MAPPING = {
         )
     },
     "last_7days_registration_count.csv": {
-        "table": "daily_registration_count_snapshot",
+        "table": "raw_daily_registration_count_last_7days",
         "load_location_columns": True,
         "pk": (
             "location_type",
@@ -113,7 +113,7 @@ TABLE_FILE_MAPPING = {
         )
     },
     "last_5days_session_status.csv": {
-        "table": "daily_session_status_snapshot",
+        "table": "raw_daily_session_status_last_5days",
         "load_location_columns": True,
         "pk": (
             "location_type",
@@ -123,7 +123,7 @@ TABLE_FILE_MAPPING = {
         )
     },
     "district_level_vaccination_count.csv": {
-        "table": "district_level_vaccination_count",
+        "table": "raw_district_level_vaccination_count",
         "load_location_columns": False,
         "pk": (
             "date",
