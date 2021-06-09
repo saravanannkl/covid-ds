@@ -1,4 +1,3 @@
-import json
 import os
 import csv
 
@@ -9,6 +8,7 @@ DATA_MAPPING = {
         "path": "topBlock.sites"
     },
     "registration_count": {
+        "location_type": "national",
         "type": "object",
         # "columns": ["total", "male", "female", "others", "online", "onspot", "today", "flwAndHcw"],
         "path": "topBlock.registration"
@@ -51,20 +51,33 @@ DATA_MAPPING = {
         # "columns": ["reg_date", "total", "male", "female", "others"],
         "path": "last7DaysRegistration"
     },
-    "last_7days_vaccination_count": {
-        "type": "object_list",
-        # "columns": ["vaccine_date", "count", "dose_one", "dose_two", "covishield", "covaxin", "aefi"],
-        "path": "last7DaysVaccination"
-    },
+    # "last_7days_vaccination_count": {
+    #     "type": "object_list",
+    #     # "columns": ["vaccine_date", "count", "dose_one", "dose_two", "covishield", "covaxin", "aefi"],
+    #     "path": "last7DaysVaccination"
+    # },
     "last_5days_session_status": {
         "type": "object_list",
         # "columns": ["session_date", "total", "planned", "ongoing", "completed"],
         "path": "last5daySessionStatus"
     },
+    "last_30days_aefi": {
+        "type": "object_list",
+        "path": "last30DaysAefi"
+    },
     "meta": {
         "type": "object",
         "columns": ["timestamp", "aefiPercentage"],
         "path": "."
+    },
+    "national_timewise_today_registration": {
+        "location_type": "national",
+        "type": "object_list",
+        "path": "timeWiseTodayRegReport"
+    },
+    "vaccination_by_time_age": {
+        "type": "object_list",
+        "path": "vaccinationDoneByTimeAgeWise"
     },
     "state_level_vaccination_count": {
         "location_type": "national",

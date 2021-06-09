@@ -84,6 +84,24 @@ TABLE_FILE_MAPPING = {
             "session_site_id"
         )
     },
+    "vaccination_by_time_age.csv": {
+        "table": "raw_vaccination_by_time_age",
+        "load_location_columns": True,
+        "pk": (
+            "location_type",
+            "location_id",
+            "date",
+            "label"
+        )
+    },
+    "national_timewise_today_registration.csv": {
+        "table": "raw_national_timewise_today_registration",
+        "load_location_columns": False,
+        "pk": (
+            "date",
+            "label"
+        )
+    },
     "state_level_vaccination_count.csv": {
         "table": "raw_state_level_vaccination_count",
         "load_location_columns": False,
@@ -120,6 +138,16 @@ TABLE_FILE_MAPPING = {
             "location_id",
             "date",
             "session_date"
+        )
+    },
+    "last_30days_aefi.csv": {
+        "table": "raw_aefi_last_30days",
+        "load_location_columns": True,
+        "pk": (
+            "location_type",
+            "location_id",
+            "date",
+            "vaccine_date"
         )
     },
     "district_level_vaccination_count.csv": {
