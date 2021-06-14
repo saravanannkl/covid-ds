@@ -17,13 +17,14 @@ TEST_MODE_DISTRICT_IDS = set([571])
 def build_url(date, state_id="", district_id=""):
     return URL_FORMAT.format(date, state_id, district_id)
 
-def fetch_data(location_type, location_id, url, output_folder):
+def fetch_data(date, location_type, location_id, url, output_folder):
     file_name = "national" if location_id == 0 else location_id
     file_path = os.path.join(output_folder, "{}.json".format(file_name))
     if os.path.exists(file_path):
         logging.warning("Data file '%s' already has data." % (file_path,))
         return
     data = requests.get(url).json()
+    data["date"] = date
     data["location_type"] = location_type
     data["location_id"] = location_id
     with open(file_path, 'w') as file:
@@ -37,7 +38,7 @@ def extract_national_data(date, output_folder):
             date: Date for which the data needs to be retrieved
     """
     logging.info("Fetching country level data")
-    fetch_data("national", 0, build_url(date), output_folder)
+    fetch_data(date, "national", 0, build_url(date), output_folder)
 
 def extract_state_data(date, folder_path, test_mode):
     """
@@ -64,7 +65,7 @@ def extract_state_data(date, folder_path, test_mode):
             continue
         logging.info("Processing State: {}".format(state_name))
         url = build_url(date, state_id)
-        fetch_data("state", state_id, url, states_path)
+        fetch_data(date, "state", state_id, url, states_path)
 
 def extract_district_data(date, folder_path, test_mode):
     """
@@ -92,7 +93,7 @@ def extract_district_data(date, folder_path, test_mode):
             continue
         logging.info("Processing State: {}".format(district_name))
         url = build_url(date, state_id, district_id)
-        fetch_data("district", district_id, url,districts_path)
+        fetch_data(date, "district", district_id, url,districts_path)
     
 
 
