@@ -1,0 +1,129 @@
+{
+  "files": {
+    "2021-04.tar.gz": {
+      "url": "https://github.com/saravanannkl/covid-ds/releases/download/v2021.04/2021-04.tar.gz"
+    },
+    "dates": {
+      "2021-04-01": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-02": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-03": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-04": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-05": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-06": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-07": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-08": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-09": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-10": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-11": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-12": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-13": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-14": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-15": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-16": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-17": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-18": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-19": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-20": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-21": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-22": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-23": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-24": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-25": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-26": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-27": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-28": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-29": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      },
+      "2021-04-30": {
+        "format": "v10",
+        "fileId": "2021-04.tar.gz"
+      }
+    }
+  }
+}
