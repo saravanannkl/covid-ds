@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="main.css">
+    <title>Covid Vaccination Data</title>
+</head>
+
+<script>
+   
+     $(document).ready(function(){
+
+        $.get("http://localhost:8001/static/graphs.html", function(data,status){
+                $("#state").html(data);     
+        }); 
+        document.getElementById("navigation_data").innerHTML = "National";
+        $("#stateselect").change(function(){
+            var selectedState = document.getElementById("stateselect").value;
+            if(selectedState === 'Select State' ){
+                document.getElementById("navigation_data").innerHTML = "National";
+                $.get("http://localhost:8001/static/graphs.html", function(data,status){
+                 $("#state").html(data);
+               
+                })
+            }
+            else{
+                document.getElementById("navigation_data").innerHTML = selectedState;
+                fetch('http://localhost:8001/covid-ds/states.json?_sort=id&name__exact='+selectedState.split(' ').join('+')+'&_shape=array')
+                            .then((response) => response.json())
+                            .then((data) => {
+                              stateID = data[0]['id'];                        
+                    $.get("http://localhost:8001/static/state.html", function(data,status){
+                        $("#state").html(data);
+                        $("#districtselect").change(function(){
+                            var selectedDistrict = document.getElementById("districtselect").value;
+                            if(selectedDistrict == 'Select District'){
+                                document.getElementById("navigation_data").innerHTML = selectedState;
+                                $.get("http://localhost:8001/static/state.html", function(data,status){
+                                $("#state").html(data);
+                                })
+                            }
+                            else{
+                                document.getElementById("navigation_data").innerHTML = selectedState+"->"+selectedDistrict;
+                                fetch('http://localhost:8001/covid-ds/districts.json?_sort=id&name__exact='+selectedDistrict.split(' ').join('+')+'&_shape=array')
+                                .then((response) => response.json())
+                                .then((data) => {
+                                districtID = data[0]['id'];
+                                    $.get("http://localhost:8001/static/district.html", function(data,status){
+                                    $("#state").html(data); 
+                                    })
+                                })    
+                            }
+                        })
+             })
+            })
+            }
+        });
+     });
+     
+</script>
+<body>
+    
+    
+    <div class="selectTags">
+    <select class="states" id="stateselect">
+        <option value="Select State"> Select State </option>
+        <script>
+            var selectTag = document.getElementById('stateselect');
+            fetch('http://localhost:8001/covid-ds/states.json?_sort=name&_shape=array')
+                .then((response) => response.json())
+                .then((data) => {
+  	                for(let i=0;i<data.length;i++){
+                        var option = document.createElement('option');
+                        option.appendChild( document.createTextNode(data[i]['name']));
+                        option.value = data[i]['name']; 
+                        selectTag.appendChild(option); 
+                      }
+            })
+        </script>        
+    </select>
+        <script>
+            $(document).ready(function(){
+                $("#stateselect").change(function(){
+                    var selected_state = document.getElementById("stateselect").value; 
+                    if(selected_state != 'Select State'){
+                        if(document.getElementById("districtselect")){
+                            var select = document.getElementById("districtselect");
+                            var length = select.options.length;
+                            for (i = length-1; i >= 0; i--) {
+                            select.options[i] = null;
+                            }
+                            select.remove();
+                        }    
+                        var newSelect = document.createElement("Select");
+                        newSelect.setAttribute("id", "districtselect");
+                        document.body.appendChild(newSelect);
+                        var selectTagDistrict = document.getElementById('districtselect');
+                        fetch('http://localhost:8001/covid-ds/states.json?_sort=id&name__exact='+selected_state.split(' ').join('+')+'&_shape=array')
+                            .then((response) => response.json())
+                            .then((data) => {
+                                id = data[0]['id'];
+                                fetch('http://localhost:8001/covid-ds/districts.json?_sort=id&state_id__exact='+id+'&_labels=on&_shape=array')
+                                    .then((response) => response.json())
+                                    .then((district_data) => {
+                                        var option = document.createElement('option');
+                                        option.appendChild( document.createTextNode("Select District"));
+                                        option.value = "Select District"; 
+                                        selectTagDistrict.appendChild(option);
+                                        for(let i=0;i<district_data.length;i++){
+                                            var option = document.createElement('option');
+                                            option.appendChild( document.createTextNode(district_data[i]['name']));
+                                            option.value = district_data[i]['name']; 
+                                            selectTagDistrict.appendChild(option); 
+                                        }
+                                    }
+                                )
+                            }
+                        )
+                        
+                    } 
+                    else if(selected_state == 'Select State'){
+                        var select = document.getElementById("districtselect");
+                        select.remove();
+                    }   
+                })
+                   
+            })
+        </script>    
+        
+    </select>
+    </div>
+    <br>
+    <br>
+    <div id="navigation_data" class="main-card"></div>
+    <br>
+    <br>
+    <div id="state"></div>
+    
+    
+</body>
+</html>
