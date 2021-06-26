@@ -184,6 +184,19 @@
         primary keys:
         type, date, state_id
 
+- ### final_district_vaccination_age
+
+        description:
+        Details on vaccination based on age 
+        group(district level) extracted from 
+        raw_vaccination_by_age
+
+        columns:
+        type, district, district_id, district_name, date
+
+        primary keys:
+        type, date, district_id        
+
 - ### national_vaccine_trend
 
         description:
@@ -221,6 +234,20 @@
 
         primary keys:
         type, date, state_id
+
+- ### district_vaccine_data
+
+        description:
+        Details on vaccination based on type of
+        vaccine(district level), extracted from 
+        raw_vaccination_count
+
+        columns:
+        type, district, district_id, district_name, date
+
+        primary keys:
+        type, date, district_id
+
 
 
 

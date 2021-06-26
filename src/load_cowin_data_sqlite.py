@@ -406,7 +406,7 @@ def load_location_data_files(db, folder, location_type, location_id):
         if not table_load_info:
             logging.warning("No mapping available for file {}".format(file))
             continue
-
+        print(file)
         logging.info("Processing file {}".format(file))
         json_file_data = get_json_from_file(os.path.join(folder, file))
         for table_name,table_value in table_load_info["tables"].items():
@@ -554,7 +554,57 @@ def raw_vacc_age_to_final_state(root_folder):
 
                 }])
     db["final_state_vaccination_age"].transform(pk=("date","state_id","type"))
-           
+
+
+def raw_vacc_age_to_final_district(root_folder):
+    """
+    Creates a new table final_district_vaccination_age from raw_vaccination_count in the database
+
+    Parameters:
+        root_folder: Root folder of the project
+    
+    """
+    db_file_path = os.path.join(root_folder, DB_FILE_NAME)
+    db = Database(db_file_path)
+    result = list(db.execute("Select date from raw_vaccination_by_age"))
+    max_date = max(result)
+    result = list(db.execute("Select * from raw_vaccination_by_age WHERE date= ? and location_type =?",[max_date[0],"district"]))
+    for item in result:
+        result_district_name = list(db.execute("Select name from districts WHERE id= ?",[item[6]]))
+        district_name = result_district_name[0][0]
+        district_id = item[6]
+        date = max_date[0]
+        vac_18_25, vac_25_40, vac_40_60, above_60 = item[1], item[2], item[3], item[4]
+        db["final_district_vaccination_age"].insert_all([{
+                "type": "vac_18_25",
+                "district": vac_18_25,
+                "district_name":district_name,
+                "district_id": district_id, 
+                "date": date,    
+                },
+                {
+                "type": "vac_25_40",
+                "district": vac_25_40,
+                "district_name":district_name,
+                "district_id": district_id,
+                "date": date,    
+                },
+                {
+                "type": "vac_40_60",
+                "district": vac_40_60,
+                "district_name":district_name,
+                "district_id": district_id,
+                "date": date,    
+                },
+                {
+                "type": "above_60",
+                "district": above_60,
+                "district_name":district_name,
+                "district_id": district_id,
+                "date": date,    
+
+                }])
+    db["final_district_vaccination_age"].transform(pk=("date","district_id","type"))
        
 
 def vaccine_data(root_folder):
@@ -624,7 +674,44 @@ def state_vaccine_data(root_folder):
                   ]) 
     db["state_vaccine_data"].transform(pk=("date","state_id","type"))                         
      
+def district_vaccine_data(root_folder):
+    """
+    Creates a new table district_vaccine_data from raw_vaccination_count in the database
+
+    Parameters:
+        root_folder: Root folder of the project
     
+    """
+    db_file_path = os.path.join(root_folder, DB_FILE_NAME)
+    db = Database(db_file_path)
+    result = list(db.execute("Select date from raw_vaccination_count"))
+    max_date = max(result)
+    result = list(db.execute("Select * from raw_vaccination_count WHERE location_type= ?",["district"]))
+    for item in result:
+        date = item[13]
+        result_district_name = list(db.execute("Select name from districts WHERE id= ?",[item[12]]))
+        district_name = result_district_name[0][0]
+        district_id = item[12]
+        if date == max_date[0]:
+            covidshield, covaxin = item[4], item[5]
+            db["district_vaccine_data"].insert_all([{
+                    "type": "covidshield",
+                    "district": covidshield,
+                    "district_name":district_name,
+                    "district_id": district_id,
+                    "date": date,    
+                    },
+                    {
+                    "type": "covaxin",
+                    "district": covaxin,
+                    "district_name":district_name,
+                    "district_id": district_id,
+                    "date": date,    
+                    },
+                  ]) 
+    db["district_vaccine_data"].transform(pk=("date","district_id","type"))                         
+
+
 
 def national_vaccine_trend(root_folder):
     """
@@ -664,6 +751,9 @@ if __name__ == "__main__":
     load_cowin_data(folder)
     raw_vacc_age_to_final(folder)
     raw_vacc_age_to_final_state(folder)
+    raw_vacc_age_to_final_district(folder)
     vaccine_data(folder)
     state_vaccine_data(folder)
+    district_vaccine_data(folder)
     national_vaccine_trend(folder)
+
